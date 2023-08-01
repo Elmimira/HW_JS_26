@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bootstrap Example</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#myModal" 
+        data-bs-toggle="tooltip" title="Здесь стих про кошку">
+            Модальное окно
+        </button>
+
+        <div class="modal fade" id="myModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Кошка</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        Через форточку в окошко <br>
+                        К нам пришла чужая кошка. <br>
+                        Форточка открытая, <br>
+                        Кошка вся немытая. <br>
+                        Мы сказали: – <br>
+                        Здравствуй, кошка, <br>
+                        Поживи у нас немножко.
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <button type="button" class="btn btn-outline-success" id="alertButton">Показать/Спрятать алерт</button>
+
+        <div id="myAlert" class="alert alert-success d-none" role="alert">
+            Это уведомление об успехе — check it out!
+        </div>
+    </div>
+
+    <div class="container mt-5">
+        <h3>Моя дата рождения:</h3>
+        <p id="myBirthdayDate"></p>
+    </div>
+
+    <div class="container mt-5">
+        <h3>Введите дату вашего рождения в формате YYYY-MM-DD:</h3>
+        <div class="input-group mb-3">
+            <input type="text" id="userBirthdayInput" class="form-control" placeholder="YYYY-MM-DD">
+            <button class="btn btn-primary" type="button" onclick="convertDate()">Превратить</button>
+        </div>
+        <p id="convertedDate"></p>
+        <p id="errorMessage" class="text-danger d-none">Некорректный формат даты. Используйте формат YYYY-MM-DD.</p>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/moment@2.29.1/moment.min.js"></script>
+    
+    <script>
+        function toggleAlert() {
+            const alertDiv = document.getElementById("myAlert");
+            alertDiv.classList.toggle("d-none");
+        }
+
+        const alertButton = document.getElementById("alertButton");
+        alertButton.addEventListener("click", toggleAlert);
+
+        const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+        tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl);
+        });
+
+        const myBirthday = "2003-09-09"; 
+        const formattedDate = moment(myBirthday).format("MMMM Do YYYY");
+        document.getElementById("myBirthdayDate").innerText = formattedDate;
+
+
+        function convertDate() {
+            const userDateInput = document.getElementById("userBirthdayInput").value;
+            const regex = /^\d{4}-\d{2}-\d{2}$/;
+
+            if (regex.test(userDateInput)) {
+                const convertedDate = moment(userDateInput).format("MMMM Do YYYY");
+                document.getElementById("convertedDate").innerText = convertedDate;
+                document.getElementById("errorMessage").classList.add("d-none");
+            } else {
+                document.getElementById("convertedDate").innerText = "";
+                document.getElementById("errorMessage").classList.remove("d-none");
+            }
+        }
+
+    </script>
+</body>
+</html>
+
